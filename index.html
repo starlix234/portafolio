@@ -1,12 +1,275 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Constanza Leiva | Ingeniera Informática</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2F4F4F', // Verde oscuro elegante
+                        secondary: '#E2E8E4', // Verde suave
+                        accent: '#5F7367', // Tono medio
+                        light: '#F8F9F8', // Fondo claro
+                        dark: '#1A1A1A', // Texto oscuro
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-shadow {
+                box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            }
+            .border-rounded {
+                border-radius: 16px;
+            }
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-    <h1>Hola mundo</h1>
-    
+<body class="bg-light text-dark font-sans">
+    <!-- Encabezado / Portada -->
+    <header class="bg-gradient-to-r from-primary to-accent text-white py-20 px-6">
+        <div class="container mx-auto max-w-5xl">
+            <div class="text-center">
+                <h1 class="font-serif text-[clamp(2.5rem,5vw,4rem)] font-bold mb-4 text-shadow">Constanza Valeria Leiva Vera</h1>
+                <h2 class="text-[clamp(1.2rem,2vw,1.8rem)] font-light mb-8 opacity-90">Ingeniera Informática | Desarrollo Web Backend</h2>
+                <p class="max-w-2xl mx-auto text-lg opacity-85 mb-10">Creando soluciones seguras, funcionales y escalables con PHP, MySQL y WordPress</p>
+                <div class="flex justify-center gap-6 flex-wrap">
+                    <a href="mailto:gerina.leiva@gmail.com" class="bg-white/20 hover:bg-white/30 transition px-5 py-2 rounded-full backdrop-blur-sm">
+                        <i class="fa fa-envelope mr-2"></i> Contáctame
+                    </a>
+                    <a href="https://linkedin.com/in/constanza-valeria-leiva-vera-0b73ba1b9" target="_blank" class="bg-white/20 hover:bg-white/30 transition px-5 py-2 rounded-full backdrop-blur-sm">
+                        <i class="fa fa-linkedin mr-2"></i> LinkedIn
+                    </a>
+                    <a href="https://github.com/starlix234" target="_blank" class="bg-white/20 hover:bg-white/30 transition px-5 py-2 rounded-full backdrop-blur-sm">
+                        <i class="fa fa-github mr-2"></i> GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sobre Mí -->
+    <section class="py-16 px-6 bg-white">
+        <div class="container mx-auto max-w-4xl">
+            <h3 class="font-serif text-3xl font-semibold text-center mb-10 text-primary">Sobre mí</h3>
+            <div class="bg-light p-8 border-rounded card-shadow">
+                <p class="text-lg leading-relaxed text-justify">
+                    Ingeniera Informática titulada con experiencia en desarrollo web backend y creación de sistemas funcionales utilizando PHP, MySQL y WordPress. 
+                    Con conocimientos en APIs REST, AJAX, control de accesos y bases de datos relacionales. 
+                    Capacidad para desarrollar soluciones orientadas a seguridad, mantenibilidad y experiencia de usuario, 
+                    destacando por pensamiento analítico, adaptabilidad tecnológica y trabajo autónomo en entornos remotos.
+                </p>
+                <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div><strong class="text-primary">📍 Ubicación:</strong> Chile</div>
+                    <div><strong class="text-primary">📧 Correo:</strong> gerina.leiva@gmail.com</div>
+                    <div><strong class="text-primary">📞 Teléfono:</strong> +56 9 4297 1785</div>
+                    <div><strong class="text-primary">🌐 Idiomas:</strong> Español (nativo), Inglés básico</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Habilidades -->
+    <section class="py-16 px-6 bg-secondary/30">
+        <div class="container mx-auto max-w-5xl">
+            <h3 class="font-serif text-3xl font-semibold text-center mb-12 text-primary">Habilidades Técnicas</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Backend -->
+                <div class="bg-white p-6 border-rounded card-shadow hover:scale-105 transition-transform">
+                    <h4 class="font-serif text-xl font-semibold mb-3 text-accent">Backend</h4>
+                    <ul class="space-y-1">
+                        <li>PHP</li>
+                        <li>MySQL</li>
+                        <li>APIs REST</li>
+                        <li>AJAX</li>
+                        <li>SQL Server</li>
+                    </ul>
+                </div>
+                <!-- Frontend -->
+                <div class="bg-white p-6 border-rounded card-shadow hover:scale-105 transition-transform">
+                    <h4 class="font-serif text-xl font-semibold mb-3 text-accent">Frontend</h4>
+                    <ul class="space-y-1">
+                        <li>HTML5 / CSS3</li>
+                        <li>JavaScript</li>
+                        <li>Bootstrap</li>
+                        <li>jQuery</li>
+                    </ul>
+                </div>
+                <!-- Herramientas -->
+                <div class="bg-white p-6 border-rounded card-shadow hover:scale-105 transition-transform">
+                    <h4 class="font-serif text-xl font-semibold mb-3 text-accent">Herramientas</h4>
+                    <ul class="space-y-1">
+                        <li>WordPress</li>
+                        <li>cPanel / Hosting</li>
+                        <li>Git / GitHub</li>
+                        <li>WebPay (Integración)</li>
+                    </ul>
+                </div>
+                <!-- Datos -->
+                <div class="bg-white p-6 border-rounded card-shadow hover:scale-105 transition-transform">
+                    <h4 class="font-serif text-xl font-semibold mb-3 text-accent">Datos & Otros</h4>
+                    <ul class="space-y-1">
+                        <li>SQL / Power BI</li>
+                        <li>Python básico</li>
+                        <li>Seguridad informática</li>
+                        <li>Control de accesos</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experiencia -->
+    <section class="py-16 px-6 bg-white">
+        <div class="container mx-auto max-w-4xl">
+            <h3 class="font-serif text-3xl font-semibold text-center mb-12 text-primary">Experiencia Profesional</h3>
+            
+            <!-- Item 1 -->
+            <div class="mb-10 p-6 border-l-4 border-primary bg-light rounded-r-lg card-shadow">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-3">
+                    <h4 class="font-semibold text-xl text-dark">Desarrolladora Web - ContraPlano.cl</h4>
+                    <span class="text-sm text-accent font-medium">Enero 2026 – Mayo 2026 | Remoto</span>
+                </div>
+                <p class="font-medium mb-2 text-primary/80">Práctica Profesional</p>
+                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                    <li>Desarrollo y configuración de soluciones en WordPress y plugins personalizados.</li>
+                    <li>Administración de servidores, cPanel, correos corporativos y firmas digitales.</li>
+                    <li>Soporte técnico, resolución de incidencias y optimización de contenido web.</li>
+                    <li>Uso de herramientas de IA para acelerar el desarrollo.</li>
+                </ul>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="mb-10 p-6 border-l-4 border-primary bg-light rounded-r-lg card-shadow">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-3">
+                    <h4 class="font-semibold text-xl text-dark">Desarrolladora Web - CMD Group</h4>
+                    <span class="text-sm text-accent font-medium">Enero 2022 – Mayo 2022</span>
+                </div>
+                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                    <li>Desarrollo de sistema de autenticación y control de accesos para plataforma escolar.</li>
+                    <li>Programación backend con PHP y MySQL, diseño de bases de datos relacionales.</li>
+                    <li>Construcción de interfaces con HTML5, CSS y JavaScript.</li>
+                    <li>Migración de plataformas y bases de datos WordPress.</li>
+                </ul>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="p-6 border-l-4 border-primary bg-light rounded-r-lg card-shadow">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-3">
+                    <h4 class="font-semibold text-xl text-dark">Desarrolladora Web - Indunet Educa SpA</h4>
+                    <span class="text-sm text-accent font-medium">Diciembre 2019 – Marzo 2020</span>
+                </div>
+                <p class="font-medium mb-2 text-primary/80">Práctica Profesional</p>
+                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                    <li>Desarrollo de sistema web para la Cámara de Comercio de El Bosque.</li>
+                    <li>Diseño e implementación de bases de datos y migración de hosting.</li>
+                    <li>Renovación de portal educativo y mejora de experiencia de usuario.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proyectos Destacados -->
+    <section class="py-16 px-6 bg-secondary/30">
+        <div class="container mx-auto max-w-5xl">
+            <h3 class="font-serif text-3xl font-semibold text-center mb-12 text-primary">Proyectos Destacados</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Proyecto 1 -->
+                <div class="bg-white border-rounded overflow-hidden card-shadow hover:translate-y-[-5px] transition-all">
+                    <div class="h-3 bg-primary"></div>
+                    <div class="p-6">
+                        <h4 class="font-serif text-2xl font-semibold mb-2">HeartCom</h4>
+                        <p class="text-sm text-accent mb-4">Sistema de Gestión para Junta de Vecinos | 2025-2026</p>
+                        <p class="mb-4 text-gray-700">Sistema completo desde cero con autenticación segura (MFA), gestión de roles, reservas y base de datos normalizada.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-secondary/50 rounded-full text-sm">PHP</span>
+                            <span class="px-3 py-1 bg-secondary/50 rounded-full text-sm">MySQL</span>
+                            <span class="px-3 py-1 bg-secondary/50 rounded-full text-sm">Bootstrap</span>
+                            <span class="px-3 py-1 bg-secondary/50 rounded-full text-sm">AJAX</span>
+                        </div>
+                        <a href="https://github.com/starlix234/heartcom.git" target="_blank" class="text-primary font-medium hover:underline">
+                            <i class="fa fa-github mr-1"></i> Ver código en GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Proyecto 2 -->
+                <div class="bg-white border-rounded overflow-hidden card-shadow hover:translate-y-[-5px] transition-all">
+                    <div class="h-3 bg-primary"></div>
+                    <div class="p-6">
+                        <h4 class="font-serif text-2xl font-semibold mb-2">Módulo de Pagos</h4>
+                        <p class="text-sm text-accent mb-4">Aplicación de Buses | 2025-2026</p>
+                        <p class="mb-4 text-gray-700">Integración completa con WebPay, gestión de tarjetas, validación de transacciones y lógica de seguridad avanzada.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-secondary/50 rounded-full text-sm">PHP</span>
+                            <span class="px-3 py-1 bg-secondary/50 rounded-full text-sm">MySQL</span>
+                            <span class="px-3 py-1 bg-secondary/50 rounded-full text-sm">WebPay</span>
+                        </div>
+                        <a href="https://github.com/starlix234/app-buses.git" target="_blank" class="text-primary font-medium hover:underline">
+                            <i class="fa fa-github mr-1"></i> Ver código en GitHub
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Educación -->
+    <section class="py-16 px-6 bg-white">
+        <div class="container mx-auto max-w-3xl">
+            <h3 class="font-serif text-3xl font-semibold text-center mb-10 text-primary">Educación</h3>
+            <div class="space-y-6">
+                <div class="p-5 bg-light border-rounded card-shadow flex flex-col md:flex-row justify-between items-start md:items-center">
+                    <div>
+                        <h4 class="font-semibold text-lg">Ingeniería Informática</h4>
+                        <p class="text-gray-600">Duoc UC – Plaza Vespucio</p>
+                    </div>
+                    <span class="text-accent font-medium mt-2 md:mt-0">2022 – 2026 | Titulada</span>
+                </div>
+                <div class="p-5 bg-light border-rounded card-shadow flex flex-col md:flex-row justify-between items-start md:items-center">
+                    <div>
+                        <h4 class="font-semibold text-lg">Analista Programador Computacional</h4>
+                        <p class="text-gray-600">Duoc UC – Puente Alto</p>
+                    </div>
+                    <span class="text-accent font-medium mt-2 md:mt-0">2013 – 2020 | Titulado</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pie de página -->
+    <footer class="bg-primary text-white py-10 px-6 text-center">
+        <div class="container mx-auto max-w-3xl">
+            <p class="mb-4">¿Tienes un proyecto en mente? Trabajemos juntos.</p>
+            <div class="flex justify-center gap-6 mb-4">
+                <a href="mailto:gerina.leiva@gmail.com" class="hover:text-secondary transition"><i class="fa fa-envelope-o text-xl"></i></a>
+                <a href="https://linkedin.com/in/constanza-valeria-leiva-vera-0b73ba1b9" target="_blank" class="hover:text-secondary transition"><i class="fa fa-linkedin-square text-xl"></i></a>
+                <a href="https://github.com/starlix234" target="_blank" class="hover:text-secondary transition"><i class="fa fa-github-square text-xl"></i></a>
+            </div>
+            <p class="text-sm opacity-70">© 2026 Constanza Valeria Leiva Vera | Ingeniera Informática</p>
+        </div>
+    </footer>
 </body>
 </html>
