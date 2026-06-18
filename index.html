@@ -11,11 +11,11 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#2F4F4F', // Verde oscuro elegante
-                        secondary: '#E2E8E4', // Verde suave
-                        accent: '#5F7367', // Tono medio
-                        light: '#F8F9F8', // Fondo claro
-                        dark: '#1A1A1A', // Texto oscuro
+                        primary: '#2F4F4F',
+                        secondary: '#E2E8E4',
+                        accent: '#5F7367',
+                        light: '#F8F9F8',
+                        dark: '#1A1A1A',
                     },
                     fontFamily: {
                         sans: ['Inter', 'system-ui', 'sans-serif'],
@@ -39,6 +39,14 @@
             .border-rounded {
                 border-radius: 16px;
             }
+            .photo-profile {
+                width: 180px;
+                height: 180px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 5px solid rgba(255,255,255,0.3);
+                box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            }
         }
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,10 +54,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="bg-light text-dark font-sans">
-    <!-- Encabezado / Portada -->
+
+    <!-- ✅ MENÚ CON LOGO ✅ -->
+    <nav class="bg-primary text-white py-3 px-6 sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto max-w-5xl flex flex-col sm:flex-row justify-between items-center">
+            <!-- Logo y Nombre -->
+            <div class="flex items-center gap-3 mb-2 sm:mb-0">
+                <!-- AQUÍ VA TU LOGO -->
+                <img src="img/Logo.png" alt="Logo Constanza Leiva" class="h-10 w-auto">
+                <a href="index.html" class="font-serif text-xl font-semibold hover:text-secondary transition">Constanza Leiva</a>
+            </div>
+            <div class="flex gap-6">
+                <a href="index.html" class="font-medium underline text-secondary">Inicio</a>
+                <a href="proyectos.html" class="hover:text-secondary transition">Proyectos</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ✅ ENCABEZADO CON FOTO DE PERFIL ✅ -->
     <header class="bg-gradient-to-r from-primary to-accent text-white py-20 px-6">
         <div class="container mx-auto max-w-5xl">
             <div class="text-center">
+                <!-- TU FOTO DE PERFIL -->
+                <img src="img/yo.jpg" alt="Constanza Leiva" class="photo-profile mx-auto mb-6">
+
                 <h1 class="font-serif text-[clamp(2.5rem,5vw,4rem)] font-bold mb-4 text-shadow">Constanza Valeria Leiva Vera</h1>
                 <h2 class="text-[clamp(1.2rem,2vw,1.8rem)] font-light mb-8 opacity-90">Ingeniera Informática | Desarrollo Web Backend</h2>
                 <p class="max-w-2xl mx-auto text-lg opacity-85 mb-10">Creando soluciones seguras, funcionales y escalables con PHP, MySQL y WordPress</p>
@@ -80,9 +108,10 @@
                     destacando por pensamiento analítico, adaptabilidad tecnológica y trabajo autónomo en entornos remotos.
                 </p>
                 <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                    <div><strong class="text-primary">📍 Ubicación:</strong> Chile</div>
+                    <div><strong class="text-primary">📍 Ubicación:</strong> Puente Alto, Santiago, Chile</div>
                     <div><strong class="text-primary">📧 Correo:</strong> gerina.leiva@gmail.com</div>
                     <div><strong class="text-primary">📞 Teléfono:</strong> +56 9 4297 1785</div>
+                    <div><strong class="text-primary">🌐 Código Postal:</strong> 8150000</div>
                     <div><strong class="text-primary">🌐 Idiomas:</strong> Español (nativo), Inglés básico</div>
                 </div>
             </div>
@@ -233,6 +262,13 @@
                 </div>
 
             </div>
+
+            <!-- Botón para ver todos los proyectos -->
+            <div class="text-center mt-12">
+                <a href="proyectos.html" class="inline-block bg-primary hover:bg-accent text-white px-8 py-3 rounded-full transition font-medium card-shadow">
+                    Ver todos mis proyectos <i class="fa fa-arrow-right ml-2"></i>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -271,5 +307,6 @@
             <p class="text-sm opacity-70">© 2026 Constanza Valeria Leiva Vera | Ingeniera Informática</p>
         </div>
     </footer>
+
 </body>
 </html>

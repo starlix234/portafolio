@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyectos | Constanza Leiva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2F4F4F',
+                        secondary: '#E2E8E4',
+                        accent: '#5F7367',
+                        light: '#F8F9F8',
+                        dark: '#1A1A1A',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-shadow {
+                box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            }
+            .border-rounded {
+                border-radius: 16px;
+            }
+            .video-box {
+                position: relative;
+                border-radius: 12px;
+                overflow: hidden;
+                background-color: #000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .video-box img {
+                width: 100%;
+                opacity: 0.8;
+            }
+            .play-button {
+                position: absolute;
+                font-size: 4rem;
+                color: white;
+                background-color: rgba(255,0,0,0.8);
+                border-radius: 50%;
+                width: 80px;
+                height: 80px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: transform 0.2s;
+            }
+            .play-button:hover {
+                transform: scale(1.1);
+                background-color: red;
+            }
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-light text-dark font-sans">
+
+    <!-- Navegación -->
+    <nav class="bg-primary text-white py-4 px-6 sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto max-w-5xl flex flex-col sm:flex-row justify-between items-center">
+            <a href="index.html" class="font-serif text-xl font-semibold mb-2 sm:mb-0 hover:text-secondary transition">Constanza Leiva</a>
+            <div class="flex gap-6">
+                <a href="index.html" class="hover:text-secondary transition">Inicio</a>
+                <a href="proyectos.html" class="font-medium underline text-secondary">Proyectos</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Encabezado -->
+    <header class="bg-gradient-to-r from-primary to-accent text-white py-16 px-6">
+        <div class="container mx-auto max-w-4xl text-center">
+            <h1 class="font-serif text-[clamp(2.2rem,4vw,3.5rem)] font-bold mb-4 text-shadow">Mis Proyectos</h1>
+            <p class="text-lg opacity-85 max-w-2xl mx-auto">Aquí puedes ver en detalle los sistemas, aplicaciones y herramientas que he desarrollado, con explicaciones y demostraciones en video.</p>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="py-16 px-6 bg-white">
+        <div class="container mx-auto max-w-5xl space-y-20">
+
+            <!-- PROYECTO 1: HEARTCOM -->
+            <section class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                <div class="order-2 lg:order-1">
+                    <h2 class="font-serif text-[clamp(1.8rem,3vw,2.5rem)] font-semibold text-primary mb-4">HeartCom</h2>
+                    <p class="text-accent font-medium mb-4">Sistema de Gestión para Junta de Vecinos | 2025 – 2026</p>
+                    
+                    <p class="text-gray-700 mb-5 leading-relaxed">
+                        Desarrollo completo de un sistema web desde cero, diseñado para administrar toda la información, socios y actividades de una junta de vecinos. Cuenta con altos estándares de seguridad y facilidad de uso.
+                    </p>
+
+                    <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
+                        <li><strong>Seguridad:</strong> Autenticación segura con doble factor (MFA) y recuperación de contraseña.</li>
+                        <li><strong>Gestión:</strong> Control de roles, permisos, sesiones y datos de usuarios.</li>
+                        <li><strong>Módulos:</strong> Administración de socios, registro de pagos, reservas de espacios y comunicados.</li>
+                        <li><strong>Tecnologías:</strong> PHP, MySQL, Bootstrap, JavaScript, AJAX, jQuery.</li>
+                        <li><strong>Base de datos:</strong> Diseño relacional normalizado y optimizado para consultas rápidas.</li>
+                    </ul>
+
+                    <div class="flex flex-wrap gap-3 mb-6">
+                        <span class="px-4 py-2 bg-secondary/60 text-primary rounded-full text-sm font-medium">PHP</span>
+                        <span class="px-4 py-2 bg-secondary/60 text-primary rounded-full text-sm font-medium">MySQL</span>
+                        <span class="px-4 py-2 bg-secondary/60 text-primary rounded-full text-sm font-medium">Bootstrap</span>
+                        <span class="px-4 py-2 bg-secondary/60 text-primary rounded-full text-sm font-medium">AJAX</span>
+                    </div>
+
+                    <a href="https://github.com/starlix234/heartcom.git" target="_blank" class="inline-block mb-4 text-primary font-medium hover:underline">
+                        <i class="fa fa-github mr-2"></i> Ver código fuente en GitHub
+                    </a>
+                </div>
+
+                <div class="order-1 lg:order-2 video-box card-shadow">
+                    <img src="https://img.youtube.com/vi/dQrK0HXgGY4/maxresdefault.jpg" alt="Vista previa del video">
+                    <a href="https://www.youtube.com/watch?v=dQrK0HXgGY4" target="_blank" class="play-button">
+                        <i class="fa fa-play"></i>
+                    </a>
+                </div>
+            </section>
+
+            <!-- PROYECTO 2: MÓDULO DE PAGOS BUSES -->
+            <section class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                <div class="video-box card-shadow">
+                    <img src="https://img.youtube.com/vi/Y16vp3mMXcI/maxresdefault.jpg" alt="Vista previa del video">
+                    <a href="https://youtu.be/Y16vp3mMXcI" target="_blank" class="play-button">
+                        <i class="fa fa-play"></i>
+                    </a>
+                </div>
+
+                <div>
+                    <h2 class="font-serif text-[clamp(1.8rem,3vw,2.5rem)] font-semibold text-primary mb-4">Módulo de Pagos</h2>
+                    <p class="text-accent font-medium mb-4">Aplicación de Transporte de Buses | 2025 – 2026</p>
+                    
+                    <p class="text-gray-700 mb-5 leading-relaxed">
+                        Desarrollo del sistema de pagos y carga de tarjetas para una aplicación móvil y web de transporte público. Integración directa con la pasarela de pagos estándar en Chile.
+                    </p>
+
+                    <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
+                        <li><strong>Integración:</strong> Conexión completa con WebPay para procesar transacciones seguras.</li>
+                        <li><strong>Funcionalidad:</strong> Carga de saldo, gestión de tarjetas asociadas y historial de movimientos.</li>
+                        <li><strong>Seguridad:</strong> Validación estricta de datos, cifrado de información y control de estados de pago.</li>
+                        <li><strong>Arquitectura:</strong> Programación backend robusta orientada a la protección de datos sensibles.</li>
+                        <li><strong>Tecnologías:</strong> PHP, MySQL, WebPay API.</li>
+                    </ul>
+
+                    <div class="flex flex-wrap gap-3 mb-6">
+                        <span class="px-4 py-2 bg-secondary/60 text-primary rounded-full text-sm font-medium">PHP</span>
+                        <span class="px-4 py-2 bg-secondary/60 text-primary rounded-full text-sm font-medium">MySQL</span>
+                        <span class="px-4 py-2 bg-secondary/60 text-primary rounded-full text-sm font-medium">WebPay</span>
+                    </div>
+
+                    <a href="https://github.com/starlix234/app-buses.git" target="_blank" class="inline-block mb-4 text-primary font-medium hover:underline">
+                        <i class="fa fa-github mr-2"></i> Ver código fuente en GitHub
+                    </a>
+                </div>
+            </section>
+
+            <!-- PROYECTO 3: PLUGIN WORDPRESS -->
+            <section class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                <div class="order-2 lg:order-1">
+                    <h2 class="font-serif text-[clamp(1.8rem,3vw,2.5rem)] font-semibold text-primary mb-4">Plugin Personalizado WordPress</h2>
+                    <p class="text-accent font-medium mb-4">Desarrollo para ContraPlano.cl | 2026</p>
+                    
+                    <p class="text-gray-700 mb-5 leading-relaxed">
+                        Creación y personalización de plugins a medida para extender las funcionalidades de sitios web en WordPress. Realizado durante mi práctica profesional, optimizando procesos y añadiendo características únicas según las necesidades del cliente.
+                    </p>
+
+                    <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
+                        <li><strong>Desarrollo:</strong> Programación de módulos específicos, formularios personalizados y gestión de contenidos.</li>
+                        <li><strong>Optimización:</strong> Mejora de rendimiento, seguridad y compatibilidad con versiones y temas.</li>
+                        <li><strong>Integración:</strong> Conexión con bases de datos externas, APIs y herramientas de terceros.</li>
+                        <li><strong>Mantenimiento:</strong> Soporte técnico, actualizaciones y resolución de incidencias en servidores cPanel.</li>
+                        <li><strong>Tecnologías:</strong> PHP, MySQL, WordPress API, JavaScript, HTML/CSS.</li>
+                    </ul>
+
+                    <div class="flex flex-wrap gap-3 mb-6">
+                        <span class="px-4 py-2 bg-secondary/60 text-primary rounded-full text-sm font-medium">WordPress</span>
+                        <span class="px-4 py-2 bg-secondary/60 text-primary rounded-full text-sm font-medium">PHP</span>
+                        <span class="px-4 py-2 bg-secondary/60 text-primary rounded-full text-sm font-medium">MySQL</span>
+                        <span class="px-4 py-2 bg-secondary/60 text-primary rounded-full text-sm font-medium">cPanel</span>
+                    </div>
+
+                    <span class="text-gray-500 text-sm">Proyecto realizado en entorno profesional</span>
+                </div>
+
+                <div class="order-1 lg:order-2 video-box card-shadow">
+                    <img src="https://img.youtube.com/vi/d96HwZ-Zc7g/maxresdefault.jpg" alt="Vista previa del video">
+                    <a href="https://www.youtube.com/watch?v=d96HwZ-Zc7g" target="_blank" class="play-button">
+                        <i class="fa fa-play"></i>
+                    </a>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Sección de Tecnologías -->
+    <section class="py-16 px-6 bg-secondary/30">
+        <div class="container mx-auto max-w-4xl text-center">
+            <h3 class="font-serif text-3xl font-semibold text-primary mb-8">Herramientas que utilizo</h3>
+            <p class="text-gray-700 mb-10 max-w-2xl mx-auto">Para desarrollar estos proyectos combino lenguajes de programación, gestores de bases de datos y herramientas de administración web, siempre buscando la mejor solución técnica.</p>
+            <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-6">
+                <div class="bg-white p-4 rounded-lg card-shadow hover:scale-105 transition-transform">
+                    <i class="fa fa-code text-3xl text-primary mb-2"></i>
+                    <p class="font-medium">PHP</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg card-shadow hover:scale-105 transition-transform">
+                    <i class="fa fa-database text-3xl text-primary mb-2"></i>
+                    <p class="font-medium">MySQL</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg card-shadow hover:scale-105 transition-transform">
+                    <i class="fa fa-wordpress text-3xl text-primary mb-2"></i>
+                    <p class="font-medium">WordPress</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg card-shadow hover:scale-105 transition-transform">
+                    <i class="fa fa-laptop text-3xl text-primary mb-2"></i>
+                    <p class="font-medium">JavaScript</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg card-shadow hover:scale-105 transition-transform">
+                    <i class="fa fa-server text-3xl text-primary mb-2"></i>
+                    <p class="font-medium">cPanel</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg card-shadow hover:scale-105 transition-transform">
+                    <i class="fa fa-git text-3xl text-primary mb-2"></i>
+                    <p class="font-medium">Git</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pie de página -->
+    <footer class="bg-primary text-white py-10 px-6 text-center">
+        <div class="container mx-auto max-w-3xl">
+            <p class="mb-4">¿Tienes un proyecto en mente? Trabajemos juntos.</p>
+            <div class="flex justify-center gap-6 mb-4">
+                <a href="mailto:gerina.leiva@gmail.com" class="hover:text-secondary transition"><i class="fa fa-envelope-o text-xl"></i></a>
+                <a href="https://linkedin.com/in/constanza-valeria-leiva-vera-0b73ba1b9" target="_blank" class="hover:text-secondary transition"><i class="fa fa-linkedin-square text-xl"></i></a>
+                <a href="https://github.com/starlix234" target="_blank" class="hover:text-secondary transition"><i class="fa fa-github-square text-xl"></i></a>
+            </div>
+            <p class="text-sm opacity-70">© 2026 Constanza Valeria Leiva Vera | Ingeniera Informática</p>
+        </div>
+    </footer>
+
+</body>
+</html>
