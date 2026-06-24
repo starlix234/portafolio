@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creaciones Musicales - AI Playlist</title>
+    <title>Creaciones Musicales - AI Live Playlist</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -54,8 +54,8 @@
         <div class="flex items-center gap-4 w-full md:w-1/3">
           <i class="fa fa-music text-4xl text-accent animate-pulse"></i>
           <div class="truncate w-full">
-            <h4 id="tituloActual" class="font-serif text-xl font-semibold text-dark truncate">Cargando...</h4>
-            <p class="text-sm text-gray-600">Creada con Suno AI</p>
+            <h4 id="tituloActual" class="font-serif text-xl font-semibold text-dark truncate">Escaneando repositorio...</h4>
+            <p class="text-sm text-gray-600">Suno AI Track</p>
           </div>
         </div>
 
@@ -86,7 +86,7 @@
     </div>
 
     <div id="listaCanciones" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <p class="col-span-full text-center text-gray-500 italic">Cargando lista de canciones...</p>
+        <p class="col-span-full text-center text-gray-500 italic">Sincronizando canciones con tu carpeta de GitHub...</p>
     </div>
 
     <p class="text-center text-gray-500 mt-10 italic">
@@ -98,6 +98,11 @@
 <script>
 let canciones = [];
 let indiceActual = 0;
+
+// 🛠️ CONFIGURACIÓN DE TU REPOSITORIO DIRECTO
+const USER = 'starlix234';
+const REPO = 'portafolio';
+const FOLDER_PATH = 'mp3'; 
 
 const reproductorContenedor = document.getElementById('reproductorContenedor');
 const reproductor = document.getElementById('reproductor');
@@ -111,30 +116,45 @@ const barraProgreso = document.getElementById('progreso');
 const tiempoActual = document.getElementById('tiempoActual');
 const tiempoTotal = document.getElementById('tiempoTotal');
 
-// 🔄 1. Leer automáticamente el archivo JSON local/servidor
-async function cargarPlaylist() {
+// 🔄 1. Escanear automáticamente la carpeta remota usando la API pública de GitHub
+async function escanearCarpetaGitHub() {
+  const urlApi = `https://api.github.com/repos/${USER}/${REPO}/contents/${FOLDER_PATH}`;
+  
   try {
-    const respuesta = await fetch('canciones.json');
-    canciones = await respuesta.json();
+    const respuesta = await fetch(urlApi);
+    const archivos = await respuesta.json();
     
-    if (!canciones || canciones.length === 0) {
-      listaContenedor.innerHTML = '<p class="col-span-full text-center text-red-500 italic">No hay canciones disponibles en el archivo de configuración.</p>';
+    // Filtrar para que solo lea archivos con extensión .mp3
+    const archivosMp3 = archivos.filter(archivo => archivo.name.toLowerCase().endsWith('.mp3'));
+
+    if (archivosMp3.length === 0) {
+      listaContenedor.innerHTML = '<p class="col-span-full text-center text-red-500 italic">No se encontraron archivos .mp3 en la carpeta /mp3 de GitHub.</p>';
       return;
     }
+
+    // Indexar automáticamente el Array sin necesidad de listas manuales
+    canciones = archivosMp3.map(archivo => {
+      // Reemplaza guiones y limpia el nombre para que luzca estético en el portafolio
+      const nombreLimpio = archivo.name.replace(/\.mp3$/i, '').replace(/_/g, ' ').replace(/-/g, ' ');
+      return {
+        nombre: nombreLimpio,
+        url: archivo.download_url // URL directa que provee GitHub para streaming nativo
+      };
+    });
 
     reproductorContenedor.classList.remove('hidden');
     generarLista();
     cargarCancion(0);
 
   } catch (error) {
-    console.error("Error al cargar canciones.json:", error);
-    listaContenedor.innerHTML = '<p class="col-span-full text-center text-red-500 italic">Error al cargar la lista de reproducción. Asegúrate de tener el archivo "canciones.json".</p>';
+    console.error("Error al escanear GitHub:", error);
+    listaContenedor.innerHTML = '<p class="col-span-full text-center text-red-500 italic">Error al conectar con el repositorio. Asegúrate de que la carpeta /mp3 exista en producción.</p>';
   }
 }
 
-window.addEventListener('DOMContentLoaded', cargarPlaylist);
+window.addEventListener('DOMContentLoaded', escanearCarpetaGitHub);
 
-// 🎵 2. Controladores del Reproductor
+// 🎵 2. Controladores del Reproductor (Atrás, Adelante, Selección)
 function cargarCancion(indice) {
   if (indice < 0) indice = canciones.length - 1;
   if (indice >= canciones.length) indice = 0;
@@ -166,7 +186,7 @@ function togglePlay() {
 function anterior() { cargarCancion(indiceActual - 1); reproductor.play(); btnPlay.innerHTML = '<i class="fa fa-pause-circle"></i>'; }
 function siguiente() { cargarCancion(indiceActual + 1); reproductor.play(); btnPlay.innerHTML = '<i class="fa fa-pause-circle"></i>'; }
 
-// ⏱️ 3. Formatos y Tiempos
+// ⏱️ 3. Formatos de tiempo y sincronización de barra
 function formatearTiempo(segundos) {
   if (isNaN(segundos)) return "0:00";
   const m = Math.floor(segundos / 60);
@@ -191,7 +211,7 @@ barraProgreso.addEventListener('input', () => {
   reproductor.currentTime = nuevoTiempo;
 });
 
-// 📋 4. Renderizar tarjetas en la interfaz
+// 📋 4. Renderizar tarjetas dinámicas basados en el escaneo
 function generarLista() {
   listaContenedor.innerHTML = '';
   canciones.forEach((cancion, indice) => {
@@ -205,7 +225,7 @@ function generarLista() {
           <i class="fa fa-music text-2xl text-accent"></i>
           <h4 class="font-serif text-lg font-semibold text-dark line-clamp-2">${cancion.nombre}</h4>
         </div>
-        <p class="text-gray-600 text-sm">Streaming Automático</p>
+        <p class="text-gray-600 text-sm">Streaming Directo</p>
       </div>
       <div>
         <a href="${cancion.url}" download="${cancion.nombre}.mp3" class="inline-block mt-3 text-primary text-sm hover:underline" onclick="event.stopPropagation();" target="_blank">
@@ -217,7 +237,7 @@ function generarLista() {
   });
 }
 
-// Eventos
+// Inicialización de eventos
 btnPlay.addEventListener('click', togglePlay);
 btnAnterior.addEventListener('click', anterior);
 btnSiguiente.addEventListener('click', siguiente);
