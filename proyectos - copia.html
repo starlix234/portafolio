@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creaciones Musicales</title>
+
+    <!-- Librerías y configuración igual a tu portafolio -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2F4F4F',
+                        secondary: '#E2E8E4',
+                        accent: '#5F7367',
+                        light: '#F8F9F8',
+                        dark: '#1A1A1A',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Estilos personalizados -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .card-shadow { box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+            .border-rounded { border-radius: 16px; }
+            .activa {
+                border-left: 4px solid #2F4F4F;
+                background-color: rgba(95, 115, 103, 0.15);
+            }
+        }
+    </style>
+</head>
+<body class="bg-light text-dark font-sans">
+
+<!-- SECCIÓN: CREACIONES MUSICALES CON IA -->
+<section class="py-16 px-6 bg-white">
+  <div class="container mx-auto max-w-5xl">
+    <h3 class="font-serif text-3xl font-semibold text-center mb-12 text-primary">Creaciones con Inteligencia Artificial</h3>
+
+    <!-- 📁 Botón para seleccionar carpeta -->
+    <div class="text-center mb-8">
+      <input type="file" id="selectorCarpeta" webkitdirectory directory multiple accept=".mp3" class="hidden">
+      <label for="selectorCarpeta" class="inline-block bg-primary hover:bg-accent text-white px-8 py-3 rounded-full transition font-medium cursor-pointer card-shadow">
+        <i class="fa fa-folder-open mr-2"></i> Seleccionar carpeta "mp3"
+      </label>
+      <p class="text-sm text-gray-500 mt-2">Selecciona la carpeta donde tienes guardadas tus canciones</p>
+    </div>
+
+    <!-- 🎧 Reproductor Global -->
+    <div class="bg-light p-6 border-rounded card-shadow mb-10 sticky top-4 z-40 hidden" id="reproductorContenedor">
+      <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+        <div class="flex items-center gap-4">
+          <i class="fa fa-music text-4xl text-accent"></i>
+          <div>
+            <h4 id="tituloActual" class="font-serif text-xl font-semibold text-dark">Ninguna canción seleccionada</h4>
+            <p class="text-sm text-gray-600">Creada con Suno AI</p>
+          </div>
+        </div>
+
+        <div class="w-full md:w-2/3">
+          <audio id="reproductor" preload="metadata" class="w-full">
+            Tu navegador no soporta la reproducción de audio
+          
+
+          <div class="flex items-center justify-between mt-3 gap-3">
+            <button id="btnAnterior" class="text-primary hover:text-accent text-xl transition-colors"><i class="fa fa-step-backward"></i></button>
+            <button id="btnPlay" class="text-primary hover:text-accent text-2xl transition-colors"><i class="fa fa-play-circle"></i></button>
+            <button id="btnSiguiente" class="text-primary hover:text-accent text-xl transition-colors"><i class="fa fa-step-forward"></i></button>
+            
+            <div class="flex items-center gap-2 ml-auto">
+              <i class="fa fa-volume-up text-gray-600"></i>
+              <input type="range" id="volumen" min="0" max="1" step="0.01" value="0.7" class="w-24 cursor-pointer accent-primary">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 📋 Lista de canciones cargadas -->
+    <div id="listaCanciones" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <p class="col-span-full text-center text-gray-500 italic">Selecciona la carpeta para ver tus canciones</p>
+    </div>
+
+    <p class="text-center text-gray-500 mt-10 italic">
+      La inteligencia artificial es una herramienta más: igual que en el desarrollo de software, transforma ideas en resultados.
+    </p>
+  </div>
+</section>
+
+<!-- ✅ JAVASCRIPT: LEE LA CARPETA AUTOMÁTICAMENTE -->
+<script>
+let canciones = [];
+let indiceActual = 0;
+
+// Elementos
+const selectorCarpeta = document.getElementById('selectorCarpeta');
+const reproductorContenedor = document.getElementById('reproductorContenedor');
+const reproductor = document.getElementById('reproductor');
+const tituloActual = document.getElementById('tituloActual');
+const btnAnterior = document.getElementById('btnAnterior');
+const btnPlay = document.getElementById('btnPlay');
+const btnSiguiente = document.getElementById('btnSiguiente');
+const controlVolumen = document.getElementById('volumen');
+const listaContenedor = document.getElementById('listaCanciones');
+
+// 📂 Leer archivos al seleccionar carpeta
+selectorCarpeta.addEventListener('change', (e) => {
+  const archivos = Array.from(e.target.files);
+  // Filtrar solo archivos MP3
+  canciones = archivos.filter(archivo => archivo.type === 'audio/mpeg' || archivo.name.endsWith('.mp3'));
+
+  if (canciones.length === 0) {
+    listaContenedor.innerHTML = '<p class="col-span-full text-center text-red-500 italic">No se encontraron archivos MP3 en la carpeta</p>';
+    reproductorContenedor.classList.add('hidden');
+    return;
+  }
+
+  // Mostrar reproductor y generar lista
+  reproductorContenedor.classList.remove('hidden');
+  generarLista();
+  cargarCancion(0);
+});
+
+// 🎵 Cargar canción
+function cargarCancion(indice) {
+  if (indice < 0) indice = canciones.length - 1;
+  if (indice >= canciones.length) indice = 0;
+
+  indiceActual = indice;
+  const cancion = canciones[indice];
+  const url = URL.createObjectURL(cancion);
+
+  reproductor.src = url;
+  tituloActual.textContent = cancion.name.replace(/\.mp3$/i, '');
+
+  // Resaltar canción activa
+  document.querySelectorAll('.tarjeta').forEach((tarjeta, i) => {
+    tarjeta.classList.toggle('activa', i === indice);
+  });
+}
+
+// ▶️ Reproducir / Pausar
+function togglePlay() {
+  if (reproductor.paused) {
+    reproductor.play();
+    btnPlay.innerHTML = '<i class="fa fa-pause-circle"></i>';
+  } else {
+    reproductor.pause();
+    btnPlay.innerHTML = '<i class="fa fa-play-circle"></i>';
+  }
+}
+
+// ⏮️⏭️ Cambiar canción
+function anterior() { cargarCancion(indiceActual - 1); reproductor.play(); btnPlay.innerHTML = '<i class="fa fa-pause-circle"></i>'; }
+function siguiente() { cargarCancion(indiceActual + 1); reproductor.play(); btnPlay.innerHTML = '<i class="fa fa-pause-circle"></i>'; }
+
+// 📋 Generar tarjetas
+function generarLista() {
+  listaContenedor.innerHTML = '';
+  canciones.forEach((cancion, indice) => {
+    const nombre = cancion.name.replace(/\.mp3$/i, '');
+    const tarjeta = document.createElement('div');
+    tarjeta.className = 'tarjeta bg-light p-5 border-rounded card-shadow hover:translate-y-[-4px] transition-all cursor-pointer';
+    tarjeta.onclick = () => { cargarCancion(indice); reproductor.play(); btnPlay.innerHTML = '<i class="fa fa-pause-circle"></i>'; };
+
+    tarjeta.innerHTML = `
+      <div class="flex items-center gap-3 mb-3">
+        <i class="fa fa-music text-2xl text-accent"></i>
+        <h4 class="font-serif text-lg font-semibold text-dark">${nombre}</h4>
+      </div>
+      <p class="text-gray-600 text-sm">Archivo de audio MP3</p>
+      <a href="${URL.createObjectURL(cancion)}" download="${cancion.name}" class="inline-block mt-3 text-primary text-sm hover:underline">
+        <i class="fa fa-download mr-1"></i> Descargar
+      </a>
+    `;
+    listaContenedor.appendChild(tarjeta);
+  });
+}
+
+// Eventos
+btnPlay.addEventListener('click', togglePlay);
+btnAnterior.addEventListener('click', anterior);
+btnSiguiente.addEventListener('click', siguiente);
+controlVolumen.addEventListener('input', () => reproductor.volume = controlVolumen.value);
+reproductor.addEventListener('ended', siguiente);
+</script>
+
+</body>
+</html>
