@@ -43,6 +43,16 @@
     </style>
 </head>
 <body class="bg-light text-dark font-sans">
+<nav class="bg-white shadow-md py-4 px-6 sticky top-0 z-50">
+    <div class="container mx-auto flex justify-between items-center">
+        <a href="index.html" class="font-serif text-2xl font-semibold text-primary">AI Live Playlist</a>
+        <div class="flex gap-6">
+            <a href="index.html" class="hover:text-secondary transition">Inicio</a>
+            <a href="proyectos.html" class="hover:text-secondary transition">Proyectos</a>
+            <a href="Musica.html" class="font-medium underline text-secondary">Música</a>
+        </div>
+    </div>  
+</nav>
 
 <section class="py-16 px-6 bg-white">
   <div class="container mx-auto max-w-5xl">
@@ -86,12 +96,9 @@
     </div>
 
     <div id="listaCanciones" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <p class="col-span-full text-center text-gray-500 italic">Sincronizando canciones con tu carpeta de GitHub...</p>
+        <p class="col-span-full text-center text-gray-500 italic">Sincronizando canciones directamente desde tu carpeta de GitHub...</p>
     </div>
 
-    <p class="text-center text-gray-500 mt-10 italic">
-      La inteligencia artificial es una herramienta más: igual que en el desarrollo de software, transforma ideas en resultados.
-    </p>
   </div>
 </section>
 
@@ -99,7 +106,7 @@
 let canciones = [];
 let indiceActual = 0;
 
-// 🛠️ CONFIGURACIÓN DE TU REPOSITORIO DIRECTO
+// 🛠️ CONFIGURACIÓN DE TU REPOSITORIO
 const USER = 'starlix234';
 const REPO = 'portafolio';
 const FOLDER_PATH = 'mp3'; 
@@ -116,29 +123,34 @@ const barraProgreso = document.getElementById('progreso');
 const tiempoActual = document.getElementById('tiempoActual');
 const tiempoTotal = document.getElementById('tiempoTotal');
 
-// 🔄 1. Escanear automáticamente la carpeta remota usando la API pública de GitHub
+// 🔄 Escanear automáticamente la carpeta remota usando la API pública de GitHub
 async function escanearCarpetaGitHub() {
   const urlApi = `https://api.github.com/repos/${USER}/${REPO}/contents/${FOLDER_PATH}`;
   
   try {
     const respuesta = await fetch(urlApi);
+    
+    if (!respuesta.ok) {
+        throw new Error(`HTTP error! status: ${respuesta.status}`);
+    }
+    
     const archivos = await respuesta.json();
     
     // Filtrar para que solo lea archivos con extensión .mp3
     const archivosMp3 = archivos.filter(archivo => archivo.name.toLowerCase().endsWith('.mp3'));
 
     if (archivosMp3.length === 0) {
-      listaContenedor.innerHTML = '<p class="col-span-full text-center text-red-500 italic">No se encontraron archivos .mp3 en la carpeta /mp3 de GitHub.</p>';
+      listaContenedor.innerHTML = '<p class="col-span-full text-center text-red-500 italic">No se encontraron archivos .mp3 en la carpeta /mp3 de tu GitHub.</p>';
       return;
     }
 
-    // Indexar automáticamente el Array sin necesidad de listas manuales
+    // Indexar automáticamente el Array sin necesidad de listas manuales ni JSONs auxiliares
     canciones = archivosMp3.map(archivo => {
-      // Reemplaza guiones y limpia el nombre para que luzca estético en el portafolio
+      // Reemplaza guiones y limpia el nombre para que luzca estético
       const nombreLimpio = archivo.name.replace(/\.mp3$/i, '').replace(/_/g, ' ').replace(/-/g, ' ');
       return {
         nombre: nombreLimpio,
-        url: archivo.download_url // URL directa que provee GitHub para streaming nativo
+        url: archivo.download_url // URL de streaming directo que provee GitHub
       };
     });
 
@@ -148,13 +160,19 @@ async function escanearCarpetaGitHub() {
 
   } catch (error) {
     console.error("Error al escanear GitHub:", error);
-    listaContenedor.innerHTML = '<p class="col-span-full text-center text-red-500 italic">Error al conectar con el repositorio. Asegúrate de que la carpeta /mp3 exista en producción.</p>';
+    listaContenedor.innerHTML = `
+      <div class="col-span-full text-center bg-red-50 p-6 rounded-xl border border-red-200">
+        <p class="text-red-600 font-semibold mb-2">¡Nota de Desarrollo!</p>
+        <p class="text-gray-600 text-sm">Si estás viendo esto localmente en tu PC, sube el archivo a GitHub para activar el escaneo automático.</p>
+        <p class="text-xs text-gray-400 mt-2">Detalle: Asegúrate de que la carpeta <b>/mp3</b> esté subida en tu rama principal.</p>
+      </div>
+    `;
   }
 }
 
 window.addEventListener('DOMContentLoaded', escanearCarpetaGitHub);
 
-// 🎵 2. Controladores del Reproductor (Atrás, Adelante, Selección)
+// 🎵 Controladores del Reproductor
 function cargarCancion(indice) {
   if (indice < 0) indice = canciones.length - 1;
   if (indice >= canciones.length) indice = 0;
@@ -186,7 +204,7 @@ function togglePlay() {
 function anterior() { cargarCancion(indiceActual - 1); reproductor.play(); btnPlay.innerHTML = '<i class="fa fa-pause-circle"></i>'; }
 function siguiente() { cargarCancion(indiceActual + 1); reproductor.play(); btnPlay.innerHTML = '<i class="fa fa-pause-circle"></i>'; }
 
-// ⏱️ 3. Formatos de tiempo y sincronización de barra
+// ⏱️ Formatos de tiempo y sincronización de barra
 function formatearTiempo(segundos) {
   if (isNaN(segundos)) return "0:00";
   const m = Math.floor(segundos / 60);
@@ -211,7 +229,7 @@ barraProgreso.addEventListener('input', () => {
   reproductor.currentTime = nuevoTiempo;
 });
 
-// 📋 4. Renderizar tarjetas dinámicas basados en el escaneo
+// 📋 Renderizar tarjetas dinámicas basados en el escaneo
 function generarLista() {
   listaContenedor.innerHTML = '';
   canciones.forEach((cancion, indice) => {
