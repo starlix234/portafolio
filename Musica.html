@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creaciones Musicales</title>
+    <title>Creaciones Musicales - AI Playlist</title>
 
-    <!-- Librerías y configuración igual a tu portafolio -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,7 +31,6 @@
         }
     </script>
 
-    <!-- Estilos personalizados -->
     <style type="text/tailwindcss">
         @layer utilities {
             .card-shadow { box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
@@ -46,69 +44,49 @@
 </head>
 <body class="bg-light text-dark font-sans">
 
-    <!-- ✅ MENÚ CON LOGO ✅ -->
-    <nav class="bg-primary text-white py-3 px-6 sticky top-0 z-50 shadow-md">
-        <div class="container mx-auto max-w-5xl flex flex-col sm:flex-row justify-between items-center">
-            <!-- Logo y Nombre -->
-            <div class="flex items-center gap-3 mb-2 sm:mb-0">
-                <img src="img/Logo.png" alt="Logo Constanza Leiva" class="h-10 w-auto">
-                <a href="index.html" class="font-serif text-xl font-semibold hover:text-secondary transition">Constanza Leiva</a>
-            </div>
-            <div class="flex gap-6">
-                <a href="index.html" class="hover:text-secondary transition">Inicio</a>
-                <a href="proyectos.html" class="hover:text-secondary transition">Proyectos</a>
-                <a href="Musica.html" class="font-medium underline text-secondary">Música</a>
-            </div>
-        </div>
-    </nav>
-
-<!-- SECCIÓN: CREACIONES MUSICALES CON IA -->
 <section class="py-16 px-6 bg-white">
   <div class="container mx-auto max-w-5xl">
     <h3 class="font-serif text-3xl font-semibold text-center mb-12 text-primary">Creaciones con Inteligencia Artificial</h3>
 
-    <!-- 📁 Botón para seleccionar carpeta -->
-    <div class="text-center mb-8">
-      <input type="file" id="selectorCarpeta" webkitdirectory directory multiple accept=".mp3" class="hidden">
-      <label for="selectorCarpeta" class="inline-block bg-primary hover:bg-accent text-white px-8 py-3 rounded-full transition font-medium cursor-pointer card-shadow">
-        <i class="fa fa-folder-open mr-2"></i> Seleccionar carpeta "mp3"
-      </label>
-      <p class="text-sm text-gray-500 mt-2">Selecciona la carpeta donde tienes guardadas tus canciones</p>
-    </div>
-
-    <!-- 🎧 Reproductor Global -->
     <div class="bg-light p-6 border-rounded card-shadow mb-10 sticky top-4 z-40 hidden" id="reproductorContenedor">
-      <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
-        <div class="flex items-center gap-4">
-          <i class="fa fa-music text-4xl text-accent"></i>
-          <div>
-            <h4 id="tituloActual" class="font-serif text-xl font-semibold text-dark">Ninguna canción seleccionada</h4>
+      <div class="flex flex-col md:flex-row gap-6 items-center justify-between">
+        
+        <div class="flex items-center gap-4 w-full md:w-1/3">
+          <i class="fa fa-music text-4xl text-accent animate-pulse"></i>
+          <div class="truncate w-full">
+            <h4 id="tituloActual" class="font-serif text-xl font-semibold text-dark truncate">Cargando...</h4>
             <p class="text-sm text-gray-600">Creada con Suno AI</p>
           </div>
         </div>
 
-        <div class="w-full md:w-2/3">
-          <audio id="reproductor" preload="metadata" class="w-full">
-            Tu navegador no soporta la reproducción de audio
-          
+        <div class="w-full md:w-2/3 flex flex-col gap-2">
+          <audio id="reproductor" preload="metadata"></audio>
 
-          <div class="flex items-center justify-between mt-3 gap-3">
-            <button id="btnAnterior" class="text-primary hover:text-accent text-xl transition-colors"><i class="fa fa-step-backward"></i></button>
-            <button id="btnPlay" class="text-primary hover:text-accent text-2xl transition-colors"><i class="fa fa-play-circle"></i></button>
-            <button id="btnSiguiente" class="text-primary hover:text-accent text-xl transition-colors"><i class="fa fa-step-forward"></i></button>
+          <div class="flex items-center gap-2 w-full">
+            <span id="tiempoActual" class="text-xs text-gray-500 min-w-[35px]">0:00</span>
+            <input type="range" id="progreso" min="0" max="100" value="0" class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary">
+            <span id="tiempoTotal" class="text-xs text-gray-500 min-w-[35px]">0:00</span>
+          </div>
+
+          <div class="flex items-center justify-between mt-1 gap-3">
+            <div class="flex items-center gap-6">
+              <button id="btnAnterior" class="text-primary hover:text-accent text-xl transition-colors"><i class="fa fa-step-backward"></i></button>
+              <button id="btnPlay" class="text-primary hover:text-accent text-3xl transition-colors"><i class="fa fa-play-circle"></i></button>
+              <button id="btnSiguiente" class="text-primary hover:text-accent text-xl transition-colors"><i class="fa fa-step-forward"></i></button>
+            </div>
             
-            <div class="flex items-center gap-2 ml-auto">
+            <div class="flex items-center gap-2">
               <i class="fa fa-volume-up text-gray-600"></i>
               <input type="range" id="volumen" min="0" max="1" step="0.01" value="0.7" class="w-24 cursor-pointer accent-primary">
             </div>
           </div>
         </div>
+
       </div>
     </div>
 
-    <!-- 📋 Lista de canciones cargadas -->
     <div id="listaCanciones" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <p class="col-span-full text-center text-gray-500 italic">Selecciona la carpeta para ver tus canciones</p>
+        <p class="col-span-full text-center text-gray-500 italic">Cargando lista de canciones...</p>
     </div>
 
     <p class="text-center text-gray-500 mt-10 italic">
@@ -117,13 +95,10 @@
   </div>
 </section>
 
-<!-- ✅ JAVASCRIPT: LEE LA CARPETA AUTOMÁTICAMENTE -->
 <script>
 let canciones = [];
 let indiceActual = 0;
 
-// Elementos
-const selectorCarpeta = document.getElementById('selectorCarpeta');
 const reproductorContenedor = document.getElementById('reproductorContenedor');
 const reproductor = document.getElementById('reproductor');
 const tituloActual = document.getElementById('tituloActual');
@@ -132,44 +107,52 @@ const btnPlay = document.getElementById('btnPlay');
 const btnSiguiente = document.getElementById('btnSiguiente');
 const controlVolumen = document.getElementById('volumen');
 const listaContenedor = document.getElementById('listaCanciones');
+const barraProgreso = document.getElementById('progreso');
+const tiempoActual = document.getElementById('tiempoActual');
+const tiempoTotal = document.getElementById('tiempoTotal');
 
-// 📂 Leer archivos al seleccionar carpeta
-selectorCarpeta.addEventListener('change', (e) => {
-  const archivos = Array.from(e.target.files);
-  // Filtrar solo archivos MP3
-  canciones = archivos.filter(archivo => archivo.type === 'audio/mpeg' || archivo.name.endsWith('.mp3'));
+// 🔄 1. Leer automáticamente el archivo JSON local/servidor
+async function cargarPlaylist() {
+  try {
+    const respuesta = await fetch('canciones.json');
+    canciones = await respuesta.json();
+    
+    if (!canciones || canciones.length === 0) {
+      listaContenedor.innerHTML = '<p class="col-span-full text-center text-red-500 italic">No hay canciones disponibles en el archivo de configuración.</p>';
+      return;
+    }
 
-  if (canciones.length === 0) {
-    listaContenedor.innerHTML = '<p class="col-span-full text-center text-red-500 italic">No se encontraron archivos MP3 en la carpeta</p>';
-    reproductorContenedor.classList.add('hidden');
-    return;
+    reproductorContenedor.classList.remove('hidden');
+    generarLista();
+    cargarCancion(0);
+
+  } catch (error) {
+    console.error("Error al cargar canciones.json:", error);
+    listaContenedor.innerHTML = '<p class="col-span-full text-center text-red-500 italic">Error al cargar la lista de reproducción. Asegúrate de tener el archivo "canciones.json".</p>';
   }
+}
 
-  // Mostrar reproductor y generar lista
-  reproductorContenedor.classList.remove('hidden');
-  generarLista();
-  cargarCancion(0);
-});
+window.addEventListener('DOMContentLoaded', cargarPlaylist);
 
-// 🎵 Cargar canción
+// 🎵 2. Controladores del Reproductor
 function cargarCancion(indice) {
   if (indice < 0) indice = canciones.length - 1;
   if (indice >= canciones.length) indice = 0;
 
   indiceActual = indice;
   const cancion = canciones[indice];
-  const url = URL.createObjectURL(cancion);
 
-  reproductor.src = url;
-  tituloActual.textContent = cancion.name.replace(/\.mp3$/i, '');
+  reproductor.src = cancion.url;
+  tituloActual.textContent = cancion.nombre;
+  
+  barraProgreso.value = 0;
+  tiempoActual.textContent = "0:00";
 
-  // Resaltar canción activa
   document.querySelectorAll('.tarjeta').forEach((tarjeta, i) => {
     tarjeta.classList.toggle('activa', i === indice);
   });
 }
 
-// ▶️ Reproducir / Pausar
 function togglePlay() {
   if (reproductor.paused) {
     reproductor.play();
@@ -180,28 +163,55 @@ function togglePlay() {
   }
 }
 
-// ⏮️⏭️ Cambiar canción
 function anterior() { cargarCancion(indiceActual - 1); reproductor.play(); btnPlay.innerHTML = '<i class="fa fa-pause-circle"></i>'; }
 function siguiente() { cargarCancion(indiceActual + 1); reproductor.play(); btnPlay.innerHTML = '<i class="fa fa-pause-circle"></i>'; }
 
-// 📋 Generar tarjetas
+// ⏱️ 3. Formatos y Tiempos
+function formatearTiempo(segundos) {
+  if (isNaN(segundos)) return "0:00";
+  const m = Math.floor(segundos / 60);
+  const s = Math.floor(segundos % 60).toString().padStart(2, '0');
+  return `${m}:${s}`;
+}
+
+reproductor.addEventListener('timeupdate', () => {
+  if (reproductor.duration) {
+    const porcentaje = (reproductor.currentTime / reproductor.duration) * 100;
+    barraProgreso.value = porcentaje;
+    tiempoActual.textContent = formatearTiempo(reproductor.currentTime);
+  }
+});
+
+reproductor.addEventListener('loadedmetadata', () => {
+  tiempoTotal.textContent = formatearTiempo(reproductor.duration);
+});
+
+barraProgreso.addEventListener('input', () => {
+  const nuevoTiempo = (barraProgreso.value / 100) * reproductor.duration;
+  reproductor.currentTime = nuevoTiempo;
+});
+
+// 📋 4. Renderizar tarjetas en la interfaz
 function generarLista() {
   listaContenedor.innerHTML = '';
   canciones.forEach((cancion, indice) => {
-    const nombre = cancion.name.replace(/\.mp3$/i, '');
     const tarjeta = document.createElement('div');
-    tarjeta.className = 'tarjeta bg-light p-5 border-rounded card-shadow hover:translate-y-[-4px] transition-all cursor-pointer';
+    tarjeta.className = 'tarjeta bg-light p-5 border-rounded card-shadow hover:translate-y-[-4px] transition-all cursor-pointer flex flex-col justify-between';
     tarjeta.onclick = () => { cargarCancion(indice); reproductor.play(); btnPlay.innerHTML = '<i class="fa fa-pause-circle"></i>'; };
 
     tarjeta.innerHTML = `
-      <div class="flex items-center gap-3 mb-3">
-        <i class="fa fa-music text-2xl text-accent"></i>
-        <h4 class="font-serif text-lg font-semibold text-dark">${nombre}</h4>
+      <div>
+        <div class="flex items-center gap-3 mb-3">
+          <i class="fa fa-music text-2xl text-accent"></i>
+          <h4 class="font-serif text-lg font-semibold text-dark line-clamp-2">${cancion.nombre}</h4>
+        </div>
+        <p class="text-gray-600 text-sm">Streaming Automático</p>
       </div>
-      <p class="text-gray-600 text-sm">Archivo de audio MP3</p>
-      <a href="${URL.createObjectURL(cancion)}" download="${cancion.name}" class="inline-block mt-3 text-primary text-sm hover:underline">
-        <i class="fa fa-download mr-1"></i> Descargar
-      </a>
+      <div>
+        <a href="${cancion.url}" download="${cancion.nombre}.mp3" class="inline-block mt-3 text-primary text-sm hover:underline" onclick="event.stopPropagation();" target="_blank">
+          <i class="fa fa-download mr-1"></i> Descargar
+        </a>
+      </div>
     `;
     listaContenedor.appendChild(tarjeta);
   });
